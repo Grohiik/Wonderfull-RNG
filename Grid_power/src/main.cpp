@@ -6,8 +6,8 @@ bool posetive_edge = false;
 unsigned long oldTime = 0;
 int numberOfCycles = 0;
 
-#define upperlevel 2200
-#define lowerlevel 2000
+#define UPPERLEVEL 2200
+#define LOWERLEVEL 2000
 
 
 void setup() {
@@ -19,10 +19,10 @@ void loop() {
   unsigned long currentTime = micros();
 
   
-  if (analogInput > 2200 && !posetive_edge) {
+  if (analogInput > UPPERLEVEL && !posetive_edge) {
     posetive_edge = true;
     numberOfCycles++;
-  } else if (analogInput < 2000){
+  } else if (analogInput < LOWERLEVEL){
     posetive_edge = false;
   }
 
