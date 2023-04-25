@@ -1,10 +1,12 @@
 import serial
 import hashlib
+from bitarray import bitarray
 
 serialPort = serial.Serial(
     port="COM8", baudrate=115200, bytesize=8
 )
 
+mybits = bitarray(endian='little')
 serialString = ""  # Used to hold data coming over UART
 while 1:
     # Wait until there is data waiting in the serial buffer
@@ -17,10 +19,21 @@ while 1:
         try:
             number = int(serialString.decode("Ascii")[:-1])
 
-            with open("sha.bin", "a+b") as f:
-                f.write(hashlib.sha256(number.to_bytes(16, 'little', signed=False)).digest())
-            with open("random.bin", "a+b") as f:
-                f.write(number.to_bytes(16, 'little', signed=False))
-            print(serialString.decode("Ascii"), end="")
+            # with open("sha.bin", "a+b") as f:
+            #     f.write(hashlib.sha256(number.to_bytes(16, 'little', signed=False)).digest())
+
+            bits = bitarray(endian='little').frombytes(number.to_bytes(16, 'little', signed=False))
+            after_extractor = bitarray()
+            while bits:
+                bit1 = mybits.pop()
+                bit2 = mybits.pop()
+
+                if bit1 != bit2:
+                    after_extractor.append(bit1)
+            with open("von_neuman.bin", "a+b") as f:
+                f.write(after_extractor)
+
+
+            print(number)
         except:
             pass

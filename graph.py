@@ -2,7 +2,7 @@ import matplotlib.pyplot as plt
 
 numbers = []
 
-with open('blub.txt','r') as f:
+with open('unProcessedNumbers.txt','r') as f:
     for row in f:
         number = int(row[:-1])
         if number:
