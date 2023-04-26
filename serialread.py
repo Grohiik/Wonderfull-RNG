@@ -19,21 +19,23 @@ while 1:
         try:
             number = int(serialString.decode("Ascii")[:-1])
 
-            # with open("sha.bin", "a+b") as f:
-            #     f.write(hashlib.sha256(number.to_bytes(16, 'little', signed=False)).digest())
+            with open("sha.bin", "a+b") as f:
+                f.write(hashlib.sha256((number&255).to_bytes(1, 'little', signed=False)).digest())
 
-            bits = bitarray(endian='little').frombytes(number.to_bytes(16, 'little', signed=False))
-            after_extractor = bitarray()
-            while bits:
-                bit1 = mybits.pop()
-                bit2 = mybits.pop()
+            # bits = bitarray(endian='little')
+            # bits.frombytes(number.to_bytes(16, 'little', signed=False))
+            # after_extractor = bitarray()
+            # while bits:
+            #     bit1 = bits.pop()
+            #     bit2 = bits.pop()
 
-                if bit1 != bit2:
-                    after_extractor.append(bit1)
-            with open("von_neuman.bin", "a+b") as f:
-                f.write(after_extractor)
+            #     if bit1 != bit2:
+            #         after_extractor.append(bit1)
+            # with open("von_neuman.bin", "a+b") as f:
+            #     f.write(after_extractor)
 
-
+            with open("numbers.txt", "+a") as f:
+                f.write(serialString.decode("Ascii")[:-1])
             print(number)
         except:
             pass
