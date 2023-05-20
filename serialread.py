@@ -23,13 +23,16 @@ while 1:
             #SHA256 sliding window
             mybytes.extend((number&255).to_bytes(1, 'little', signed=False))
             if len(mybytes) >= 32:
-                with open("sliding_window_second_iteration.bin", "a+b") as f:
+                with open("sliding_window_third_iteration.bin", "a+b") as f:
                     sha = hashlib.sha256(mybytes).digest()
                     f.write(sha)
-                    print(sha.hex())
+                    # print(sha.hex())
                     mybytes = mybytes[-31:]
 
+            with open("third_iteration_numbers.txt", "a") as f:
+                f.write(str(number)+"\n")
 
-            # print(number)
+
+            print(number)
         except:
             pass
